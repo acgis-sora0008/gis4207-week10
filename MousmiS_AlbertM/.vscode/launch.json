@@ -18,6 +18,13 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        }, 
+        {
+            "name": "streetlight_analyzer_test.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
         }
     ]
 }
