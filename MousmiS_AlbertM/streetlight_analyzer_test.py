@@ -19,14 +19,12 @@ def test_get_unique_values():
 
 
 
-# Test function
 def test_get_streetlight_count():
 
     expected_count = 849
     road_name = "CARLING"
     distance = 0.0002  # Distance should be a float value, not a string
 
-    # Assertions
     assert int(sa.get_streetlight_count(road_name, distance)) == expected_count
 
 
