@@ -9,23 +9,25 @@ sa.road_name_field = "ROAD_NAME_"
 
 def test_get_unique_values():
 
-    test_value="CARLING"
     fc = r'C:\acgis\gis4207_prog\data\Ottawa\Road_Centrelines\Road_Centrelines.shp'
     field_name="ROAD_NAME_"
     
     unique_values = sa._get_unique_values(fc, field_name)
     
-    assert "CARLING" in test_value, f"Test value '{test_value}' does not contain 'CARLING'"
+    contains_carling = any("CARLING" in value for value in unique_values)
+
+    assert contains_carling, f"No value containing 'CARLING' found in unique values: {unique_values}"
 
 
 
 def test_get_streetlight_count():
-
     expected_count = 849
     road_name = "CARLING"
     distance = 0.0002  # Distance should be a float value, not a string
 
-    assert int(sa.get_streetlight_count(road_name, distance)) == expected_count
+    actual_count = int(sa.get_streetlight_count(road_name, distance))
+    assert actual_count == expected_count
+
 
 
 

@@ -15,23 +15,27 @@ def _get_unique_values(fc, field_name):
     return values
 
 def get_streetlight_count(road_name, distance):
-# Call _get_unique_values to get all unique road names
+    # Call _get_unique_values to get all unique road names
     unique_road_names = _get_unique_values(roads_cl_fc, "ROAD_NAME_")
     
-# Check if the provided road_name is in the unique road names
-    if road_name not in unique_road_names:
-        raise ValueError(f"The provided road_name '{road_name}' is not valid.")
+    # Check if any road names contain the provided string
+    matching_road_names = [name for name in unique_road_names if road_name.upper() in name.upper()]
+    
+    if not matching_road_names:
+        raise ValueError(f"No road names containing '{road_name}' were found.")
 
-# Perform selection by attribute on road centrelines
-    Road_selected = arcpy.management.SelectLayerByAttribute(roads_cl_fc, where_clause=f"ROAD_NAME_ LIKE '%{road_name}%'")
+    # Perform selection by attribute on road centrelines
+    where_clause = " OR ".join([f"ROAD_NAME_ LIKE '%{name}%'" for name in matching_road_names])
+    Road_selected = arcpy.management.SelectLayerByAttribute(roads_cl_fc, where_clause=where_clause)
 
-# Perform selection by location on street lights based on the selected road centrelines
+    # Perform selection by location on street lights based on the selected road centrelines
     Street_Light_Selected = arcpy.management.SelectLayerByLocation(streetlight_fc, "WITHIN_A_DISTANCE", Road_selected, search_distance=distance)
 
-# Get the count of selected street lights
+    # Get the count of selected street lights
     selected_count = arcpy.management.GetCount(Street_Light_Selected).getOutput(0)
 
     return selected_count
+
 
 def save_streetlights(road_name, distance, out_fc):
     """
