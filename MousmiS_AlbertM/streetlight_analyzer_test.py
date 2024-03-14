@@ -56,6 +56,32 @@ def test_save_streetlights():
 
     # Clean up - delete the output feature class
     arcpy.Delete_management(out_fc)
+    
+    
+def test_show_road_names():
+    # Define test parameters
+    pattern = "Main"  # Test pattern to filter road names
+    
+    # Mock data paths
+    roads_cl_fc = r'C:\acgis\gis4207_prog\data\Ottawa\Road_Centrelines\Road_Centrelines.shp'
+    road_name_field = "ROAD_NAME_"
+    
+    # Create mock feature class if it doesn't exist
+    if not arcpy.Exists(roads_cl_fc):
+        arcpy.CreateFeatureclass_management(os.path.dirname(roads_cl_fc), os.path.basename(roads_cl_fc), "POLYLINE")
+    
+    # Populate the mock feature class with some test data
+    # (This step can vary depending on your specific test scenario)
+    
+    # Run the function to show road names with the specified pattern
+    print("Road Names with pattern '{}'".format(pattern))
+    sa.show_road_names(pattern)
+    
+    # Ensure no errors occurred during execution
+    # (This could involve additional checks based on the specific behavior of your function)
+    print("Test completed successfully.")
+
+    
 
 
 
