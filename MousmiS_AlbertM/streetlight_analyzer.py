@@ -37,7 +37,7 @@ def get_streetlight_count(road_name, distance):
     return selected_count
 
 
-def save_streetlights(road_name, distance, out_fc):
+def save_streetlights(road_name, distance, out_fc, streetlight_fc, roads_cl_fc, road_name_field):
     """
     Saves the selected streetlights to a feature class (out_fc).
     The selected streetlights are within “distance” of the line segments where road_name_field = road_name.
@@ -58,6 +58,7 @@ def save_streetlights(road_name, distance, out_fc):
     # Clear selection
     arcpy.SelectLayerByAttribute_management(streetlight_fc, "CLEAR_SELECTION")
     arcpy.Delete_management("selected_roads")
+
 
 def show_road_names(pattern=None):
     """
